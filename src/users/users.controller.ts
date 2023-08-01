@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -28,7 +29,11 @@ export class UsersController {
 
   @Get(':id')
   getUser(@Param('id') id: string) {
-    return this.usersService.getUser(+id);
+    try {
+      return this.usersService.getUser(+id);
+    } catch (e) {
+      throw new NotFoundException();
+    }
   }
 
   @Patch(':id')
